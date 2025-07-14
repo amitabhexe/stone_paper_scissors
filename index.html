@@ -1,42 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stone‑Paper‑Scissors Demo</title>
-  <!-- load Brython runtime -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stone-Paper-Scissors Demo</title>
+  <!-- Brython runtime -->
   <script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
   <style>
     body { font-family: sans-serif; margin: 2rem; }
-    textarea { font-family: monospace; width: 100%; height: 150px; }
-    button { padding: 0.5rem 1rem; }
-    pre { background: #f4f4f4; padding: 1rem; }
+    textarea { font-family: monospace; width: 100%; height: 200px; }
+    button { padding: 0.5rem 1rem; margin-top: 0.5rem; }
+    pre { background: #f4f4f4; padding: 1rem; white-space: pre-wrap; }
   </style>
 </head>
-<body onload="brython()">
-  <h1>Stone‑Paper‑Scissors Demo</h1>
-  <p>Edit the code below and hit “Run”:</p>
+<body onload="brython(); loadGameCode();">
+  <h1>Stone-Paper-Scissors Demo</h1>
+  <p>Your game code from the <code>game/</code> folder will load automatically. Click "Run ▶️" to play!</p>
 
-  <textarea id="code">
-# Replace this with your game logic!
-print("Hello from Brython!")
-  </textarea><br>
+  <textarea id="code"></textarea><br />
   <button id="run">Run ▶️</button>
   <pre id="output"></pre>
+
+  <!-- fetch game code from your GitHub repo and fill the textarea -->
+  <script>
+    async function loadGameCode() {
+      const url = 'https://raw.githubusercontent.com/amitabhexe/stone_paper_scissors/main/game/game.py';
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        document.getElementById('code').value = text;
+      } catch (e) {
+        document.getElementById('code').value = '# Error loading game code: ' + e;
+      }
+    }
+  </script>
 
   <script type="text/python">
 from browser import document
 
 def run(ev):
-    document["output"].text = ""
-    code = document["code"].value
+    document['output'].text = ''
+    code = document['code'].value
     try:
         exec(code, globals())
     except Exception as e:
-        document["output"].text = f"Error: {e}"
+        document['output'].text = 'Error: ' + str(e)
 
-document["run"].bind("click", run)
+document['run'].bind('click', run)
   </script>
 </body>
 </html>
