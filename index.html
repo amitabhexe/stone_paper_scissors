@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Python Demo</title>
-    <!-- load Brython -->
-    <script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
-  </head>
-  <body onload="brython()">
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stone‑Paper‑Scissors Demo</title>
+  <!-- load Brython runtime -->
+  <script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    textarea { font-family: monospace; width: 100%; height: 150px; }
+    button { padding: 0.5rem 1rem; }
+    pre { background: #f4f4f4; padding: 1rem; }
+  </style>
+</head>
+<body onload="brython()">
+  <h1>Stone‑Paper‑Scissors Demo</h1>
+  <p>Edit the code below and hit “Run”:</p>
 
-    <h1>My Python Demo</h1>
-    <textarea id="code" rows="8" cols="60">
+  <textarea id="code">
+# Replace this with your game logic!
 print("Hello from Brython!")
-    </textarea><br/>
+  </textarea><br>
+  <button id="run">Run ▶️</button>
+  <pre id="output"></pre>
 
-    <button id="run">Run ▶️</button>
-    <pre id="output"></pre>
-
-    <!-- your Python “app” lives here -->
-    <script type="text/python">
+  <script type="text/python">
 from browser import document
 
 def run(ev):
+    document["output"].text = ""
     code = document["code"].value
     try:
-        document["output"].text = ""
         exec(code, globals())
     except Exception as e:
         document["output"].text = f"Error: {e}"
 
 document["run"].bind("click", run)
-    </script>
-
-  </body>
+  </script>
+</body>
 </html>
